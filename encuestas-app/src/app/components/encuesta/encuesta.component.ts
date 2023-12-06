@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, FormControl, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl, AbstractControl, Validators } from '@angular/forms';
 import { IPregunta } from '../IPregunta';
 import { IEncuesta } from '../IEncuesta';
 
@@ -10,37 +10,74 @@ import { IEncuesta } from '../IEncuesta';
 })
 export class EncuestaComponent {
 
+  constructor(private formBuilder: FormBuilder) { }
+
+  formulario: FormGroup = this.formBuilder.group({
+    tituloPregunta: ['', Validators.required],
+    opcionesPregunta: this.formBuilder.array([this.crearOpcion()])
+  });
+
+  /* Titulo pregunta */
+  get getTituloPregunta(): any {
+    return this.formulario.get('tituloPregunta');
+  }
+
+  /* Opciones */
+  get getOpcionesPregunta(): FormGroup[] {
+    return (this.formulario.get('opcionesPregunta') as FormArray).controls as FormGroup[];
+  }
+
+  getOpcionesPreguntaValues(): string[] {
+    return this.getOpcionesPregunta.map(control => control.get('texto')?.value || '');
+  }
+
+  crearOpcion(): FormGroup {
+    return this.formBuilder.group({
+      texto: ['', Validators.required]
+    });
+  }
+
+  agregarOpcion() {
+    const opcionesPreguntaControl = this.formulario.get('opcionesPregunta') as FormArray;
+    opcionesPreguntaControl.push(this.crearOpcion());
+  }
+
   encuesta: IEncuesta | null = null;
   tituloEncuesta: string = "";
   pin: string = "";
   listaPreguntas: IPregunta[] = [];
 
-  tituloPregunta: string = "";
-  opcionesPregunta: string[] = [];
+  agregarPregunta() {
+    if (this.getTituloPregunta.value !== '' && this.getOpcionesPreguntaValues().length > 1) {
+      this.listaPreguntas.push({
+        titulo: this.getTituloPregunta.value,
+        opciones: this.getOpcionesPreguntaValues()
+      });
+      // Limpiar todas las opciones
+      const opcionesPreguntaControl = this.formulario.get('opcionesPregunta') as FormArray;
+      opcionesPreguntaControl.clear();
 
-  agregarOpcion() {
-    this.opcionesPregunta.push("");
+      // Agregar una nueva opción vacía
+      opcionesPreguntaControl.push(this.crearOpcion());
+
+      // Limpiar el título
+      this.formulario.patchValue({
+        tituloPregunta: ''
+      });
+    }
   }
 
-  agregarPregunta(){
-    this.listaPreguntas.push({
-      titulo: this.tituloPregunta,
-      opciones: this.opcionesPregunta
-    })
-    this.opcionesPregunta = [];
-    this.tituloPregunta = "";
-  }
-
-  subirEncuesta(){    
+  subirEncuesta() {
     this.pin = this.generarPin();
     this.encuesta = {
       titulo: this.tituloEncuesta,
       preguntas: this.listaPreguntas,
       pin: this.pin
     }
+    console.log(this.encuesta);
+
     // ruteo y llamada al servidor
   }
-
 
   generarPin(): string {
     let numerosAleatorios = '';
@@ -50,6 +87,4 @@ export class EncuestaComponent {
     return numerosAleatorios;
   }
 
-
-  
 }

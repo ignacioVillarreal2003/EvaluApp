@@ -1,18 +1,18 @@
 <div class="encuesta">
     <input class="tituloFormulario" type="text" placeholder="Formulario sin titulo" [(ngModel)]="tituloEncuesta">
     
-    <div class="crearPregunta">
+    <form [formGroup]="formulario" class="crearPregunta">
         <div class="pregunta">
-            <input class="tituloPregunta" type="text" placeholder="Pregunta sin titulo" [(ngModel)]="tituloPregunta">
-            <ul class="opciones">
-                <li class="opcion" *ngFor="let opcion of opcionesPregunta; let i = index">
-                    <input class="textoOpcion" type="text" placeholder="Sin opcion" [(ngModel)]="opcionesPregunta[i]">
-                </li>
-            </ul>
-            <button (click)="agregarOpcion()" class="añadir1">Añadir opcion</button>
+          <input class="tituloPregunta" type="text" placeholder="Pregunta sin titulo" formControlName="tituloPregunta">
+          <ul class="opciones">
+            <li class="opcion" *ngFor="let opcion of getOpcionesPregunta; let i = index" [formGroup]="opcion">
+              <input class="textoOpcion" type="text" placeholder="Sin opcion" formControlName="texto">
+            </li>
+          </ul>
+          <button (click)="agregarOpcion()" class="añadir1">Añadir opcion</button>
         </div>
         <button (click)="agregarPregunta()" class="añadir2">Añadir pregunta</button>
-    </div>
+      </form>
 
     <div class="visualizarPreguntas">
         <ul class="vPreguntas">
