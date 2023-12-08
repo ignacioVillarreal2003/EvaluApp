@@ -1,0 +1,17 @@
+<div class="resultadosEncuesta">
+    <h1>Encuesta</h1>
+    <h2>pin: {{pin}}</h2>
+    <div class="visualizarPreguntas" *ngIf="encuesta">
+        <ul class="vPreguntas">
+            <li class="vPregunta" *ngFor="let pregunta of encuesta.preguntas">
+                <h2>{{pregunta.titulo}}</h2>
+                <ul class="vOpciones">
+                    <li class="vOpcion" *ngFor="let opcion of pregunta.opciones">
+                        <p>{{opcion.titulo}}</p>
+                        <p>{{opcion.calificacion}}</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

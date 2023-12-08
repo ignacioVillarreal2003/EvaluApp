@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpService } from '../http.service';
 import { Router } from '@angular/router';
+import { DatosService } from '../datos.service';
 
 @Component({
   selector: 'app-main',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class MainComponent {
 
-  constructor(private httpService: HttpService, private router: Router){}
+  constructor(private httpService: HttpService, private router: Router, private datosService: DatosService){}
 
   pin: string = "";
 
@@ -17,7 +18,8 @@ export class MainComponent {
     if (this.pin !== ""){
       this.httpService.checkPin(this.pin).subscribe(
         (response) => {
-          this.router.navigate(['/encuesta']);
+          this.datosService.pinUsuario = this.pin;
+          this.router.navigate(['/hacerEncuesta']);
           console.log(response.message);
         },
         (error) => {
