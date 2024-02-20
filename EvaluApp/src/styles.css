@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,349;1,349&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 350;
+    font-style: normal;
+}
+
+.encuesta .crearPregunta .pregunta .opciones .opcion .textoOpcion {
+    width: 300px;
+    height: 30px;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 30px;
+}

@@ -1,0 +1,18 @@
+<div class="take-survey" *ngIf="survey">
+    <h1>Take a survey</h1>
+    <h2>{{ survey.title }}</h2>
+    <ul class="questions">
+        <li class="question" *ngFor="let question of survey.questions">
+            <h3>{{ question.title }}</h3>
+            <ul class="options">
+                <li class="option" *ngFor="let option of question.options; let i = index">
+                    <input type="checkbox" (change)="addRating(question, i, $event)">
+                    <p>{{ option.title }}</p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <button class="btn-finish" (click)="submitSurveyResults()">Finish survey</button>
+</div>
+
+

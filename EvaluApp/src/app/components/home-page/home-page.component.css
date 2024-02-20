@@ -1,0 +1,62 @@
+.home-page {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    background-color: #ffffff49;
+    padding: 40px;
+    width: 400px;
+    height: 500px;
+    box-sizing: border-box;
+
+}
+
+.home-page h1 {
+    font-size: 45px;
+    margin-bottom: 40px;
+    color: rgb(32, 31, 31);
+}
+
+.home-page .btn-create {
+    font-size: 25px;
+    width: 250px;
+    height: 60px;
+    margin-bottom: 30px;
+    border: none;
+    background-color: #9AD0C2;
+    transition: all .350s ease-in-out;
+    cursor: pointer;
+}
+
+.home-page .btn-create:hover {
+    transform: scale(1.1);
+}
+
+.home-page .join {
+    display: flex;
+    gap: 10px;
+}
+
+.home-page .input-pin {
+    width: 180px;
+    height: 50px;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 30px;
+    border: 1px solid;
+}
+
+.home-page .btn-join {
+    font-size: 20px;
+    width: 60px;
+    height: 50px;
+    margin-bottom: 30px;
+    border: none;
+    background-color: #F0F3FF;
+    transition: all .350s ease-in-out;
+    cursor: pointer;
+}
+
+.home-page .btn-join:hover {
+    transform: scale(1.1);
+}

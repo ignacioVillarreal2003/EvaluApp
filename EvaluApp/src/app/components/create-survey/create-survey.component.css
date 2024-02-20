@@ -1,0 +1,159 @@
+.create-survey {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #ffffff49;
+    padding: 40px;
+    box-sizing: border-box;
+    transition: all 0.35s ease-in-out;
+}
+
+.create-survey:hover {
+    background-color: #312d2da6;
+}
+
+.create-survey .title {
+    width: 300px;
+    height: 40px;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.create-survey .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 800px;
+    height: 400px;
+}
+
+.create-survey .createQuestion {
+    background-color: #e1f0da8f;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+
+.create-survey .createQuestion .question {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    margin-bottom: 40px;
+    height: 280px;
+}
+
+.create-survey .createQuestion .question .questionTitle {
+    width: 300px;
+    height: 35px;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+.create-survey .createQuestion .question .options {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.create-survey .createQuestion .question .options .option .optionText {
+    width: 280px;
+    height: 28px;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 30px;
+    box-sizing: border-box;
+}
+
+.create-survey .btn-add-option {
+    width: 150px;
+    height: 40px;
+    font-size: 18px;
+    border: none;
+    background-color: #ff80806b;
+    cursor: pointer;
+}
+
+.create-survey .btn-add-option:hover {
+    background-color: #ff8080b9;
+}
+
+.create-survey .btn-add-question {
+    width: 160px;
+    height: 40px;
+    font-size: 18px;
+    border: none;
+    background-color: #ff80806b;
+    cursor: pointer;
+}
+
+.create-survey .add2:hover {
+    background-color: #ff8080b9;
+}
+
+.create-survey .viewQuestions {
+    background-color: rgba(255, 228, 196, 0.562);
+    width: 400px;
+    height: 400px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 15px;
+    box-sizing: border-box;
+    list-style: none;
+    overflow-y: scroll;
+}
+
+.create-survey .viewQuestions .viewQuestion{
+    margin-bottom: 10px;
+}
+
+.create-survey .viewQuestions h2 {
+    margin-bottom: 5px;
+}
+
+.create-survey .viewQuestions .viewOption {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.create-survey .btn-publish {
+    width: 260px;
+    height: 40px;
+    font-size: 22px;
+    border: none;
+    background-color: #ff80806b;
+    cursor: pointer;
+    margin-top: 40px;
+}
+
+.create-survey .btn-publish:hover {
+    background-color: #ff8080b9;
+}
+
+@media (max-width: 800px) {
+    .create-survey .content {
+        width: 400px;
+        height: 800px;
+        flex-direction: column;
+    }
+
+    .create-survey {
+        margin: 80px 0;
+        transform: scale(0.9);
+    }
+}

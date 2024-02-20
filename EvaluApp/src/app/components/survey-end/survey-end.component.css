@@ -1,0 +1,30 @@
+.survey-end{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aliceblue;
+    padding: 40px;
+    flex-direction: column;
+}
+
+.survey-end h1{
+font-size: 60px;
+}
+
+.survey-end h2{
+    font-size: 30px;
+}
+
+@media (max-width: 800px) {
+    .survey-end{
+        padding: 30px;
+    }
+    
+    .survey-end h1{
+    font-size: 35px;
+    }
+    
+    .survey-end h2{
+        font-size: 20px;
+    }
+}

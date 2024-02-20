@@ -1,0 +1,16 @@
+<div class="survey-results">
+    <h1>Survey: {{pin}}</h1>
+    <ul class="viewQuestions" *ngIf="survey">
+        <li class="viewQuestion" *ngFor="let question of survey.questions">
+            <h2>{{question.title}}</h2>
+            <ul class="viewOptions">
+                <li class="viewOption" *ngFor="let option of question.options">
+                    <div class="option">
+                        <p>{{option.title}}</p>
+                        <p>{{option.rating}}</p>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

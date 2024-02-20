@@ -1,0 +1,8 @@
+<div class="home-page">
+    <h1>Survey Corp</h1>
+    <button class="btn-create" routerLink="/survey">Create</button>
+    <div class="join">
+        <input class="input-pin" type="text" id="pin" placeholder="pin" [(ngModel)]="pin">
+        <button class="btn-join" (click)="joinSurvey()">Join</button>
+    </div>
+</div>

@@ -1,122 +1,117 @@
-import express from 'express'
-import { IEncuesta } from './IEncuesta'
-import { IPregunta } from './IPregunta'
-import { IOpcion } from './IOpcion'
+import express from 'express';
+import { ISurvey } from './ISurvey';
+import { IQuestion } from './IQuestion';
+import { IOption } from './IOption';
 import { createServer } from 'http';
 
-/* Configuracion */
-const app = express()
-app.use(express.json()) 
+/* Configuration */
+const app = express();
+app.use(express.json());
 
-const PORT = 3000
+const PORT = 3000;
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
-})
+    console.log(`Server running on port ${PORT}`);
+});
 
 const cors = require('cors');
-var corsOptions = {
-  origin: 'http://localhost:4200',
-  optionsSuccessStatus: 200,
-  methods: "GET, PUT, POST, DELETE"
+const corsOptions = {
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200,
+    methods: "GET, PUT, POST, DELETE"
 };
 
 app.use(cors(corsOptions));
 
 const httpServer = createServer(app);
 const io = require('socket.io')(httpServer, {
-  cors: {origin : '*'}
+    cors: { origin: '*' }
 });
 
 httpServer.listen(3002);
 
-/* Operaciones */
+/* Operations */
 
-const listaEncuestas: IEncuesta[] = []
-const resultadosEncuestas: IEncuesta[] = [];
+const surveyList: ISurvey[] = [];
+const surveyResultsList: ISurvey[] = [];
 
-app.get('/getEncuestas', (req: any, res: any) => {
-  return res.status(200).send(listaEncuestas);
+app.get('/getSurveys', (req: any, res: any) => {
+    return res.status(200).send(surveyList);
 });
 
-app.get('/getResultados', (req: any, res: any) => {
-  return res.status(200).send(resultadosEncuestas);
+app.get('/getResults', (req: any, res: any) => {
+    return res.status(200).send(surveyResultsList);
 });
 
 app.post('/checkPin', (req: any, res: any) => {
-  const pin: String = req.body.pin
-  listaEncuestas.forEach(e => {
-    if (e.pin === pin) {
-      return res.status(200).send({ message: 'Encuesta encontrada.' });
-    }
-  });
-  return res.status(400).send({ message: 'Encuesta no encontrada. Verifique el pin.' });
+    const pin: string = req.body.pin;
+    surveyList.forEach(survey => {
+        console.log(survey);
+        if (survey.pin === pin) {
+            return res.status(200).send({ message: 'Survey found.' });
+        }
+    });    
+    return res.status(400).send({ message: 'Survey not found. Check the pin.' });
 });
 
-app.post('/subirEncuesta', (req: any, res: any) => {
-  const encuesta: IEncuesta = req.body.encuesta
-  listaEncuestas.forEach(e => {
-    if (e.pin === encuesta.pin) {
-      return res.status(400).send({ message: 'Encuesta con pin existente.' });
-    }
-  });
-  listaEncuestas.push(encuesta)
-  return res.status(200).send({ message: 'Encuesta subida con exito.' });
-});
-
-app.get('/getEncuesta/:pin', (req: any, res: any) => {  
-  const pin: String = req.params.pin
-  listaEncuestas.forEach(e => {
-    if (e.pin === pin) {
-      return res.status(200).send({ encuesta: e });
-    }
-  });
-  return res.status(400).send({ message: 'Encuesta no encontrada. Verifique el pin.' });
-});
-
-
-
-app.post('/subirResultadosEncuesta', (req: any, res: any) => {
-  const resultados: IEncuesta = req.body.resultados;  
-  resultadosEncuestas.push(resultados);
-
-  const encuestaCorrespondiente = listaEncuestas.find(encuesta => encuesta.pin === resultados.pin);
-  if (!encuestaCorrespondiente) {
-    return res.status(400).send({ message: 'Encuesta no encontrada.' });
-  }
-
-  // Modificar las calificaciones en la instancia de la encuesta correspondiente
-  encuestaCorrespondiente.preguntas.forEach((pregunta: IPregunta) => {
-    resultados.preguntas.forEach((preguntaResultado: IPregunta) => {
-      if (pregunta.titulo === preguntaResultado.titulo) {
-        pregunta.opciones.forEach((opciones: IOpcion) => {
-          preguntaResultado.opciones.forEach((opcionesResultado: IOpcion) => {
-            if (opciones.titulo === opcionesResultado.titulo) {
-              console.log(opciones.titulo);
-              console.log(opciones.calificacion);
-              console.log(opcionesResultado.calificacion); // OpcionesResultado.calificacion es siempre uno mas que opciones.calificacion
-              opciones.calificacion = (opciones.calificacion as number) + (opcionesResultado.calificacion as number);
-            }
-          });
-        });
-      }
+app.post('/publishSurvey', (req: any, res: any) => {
+    const newSurvey: ISurvey = req.body.survey;
+    console.log(newSurvey);
+    surveyList.forEach(survey => {
+        if (survey.pin === newSurvey.pin) {
+            return res.status(400).send({ message: 'Survey with existing pin. Try again.' });
+        }
     });
-  });
-  enviarEncuesta(encuestaCorrespondiente);
-  return res.status(200).send({ message: 'Resultados subidos con éxito.' });
+    surveyList.push(newSurvey);
+    return res.status(200).send({ message: 'Survey uploaded successfully.' });
 });
 
+app.get('/getSurvey/:pin', (req: any, res: any) => {
+    const pin: string = req.params.pin;
+    surveyList.forEach(survey => {
+        if (survey.pin === pin) {
+            return res.status(200).send({ survey: survey });
+        }
+    });
+    return res.status(400).send({ message: 'Survey not found. Check the pin.' });
+});
 
-export function enviarEncuesta(encuesta: IEncuesta) {
-    io.emit('encuesta', encuesta);
+app.post('/submitSurveyResults', (req: any, res: any) => {
+    const results: ISurvey = req.body.results;
+    surveyResultsList.push(results);
+
+    const correspondingSurvey = surveyList.find(survey => survey.pin === results.pin);
+    if (!correspondingSurvey) {
+        return res.status(400).send({ message: 'Survey not found.' });
+    }
+
+    // Modify ratings in the corresponding survey instance
+    correspondingSurvey.questions.forEach((question: IQuestion) => {
+        results.questions.forEach((resultQuestion: IQuestion) => {
+            if (question.title === resultQuestion.title) {
+                question.options.forEach((option: IOption) => {
+                    resultQuestion.options.forEach((resultOption: IOption) => {
+                        if (option.title === resultOption.title) {
+                            option.rating = (option.rating as number) + (resultOption.rating as number);
+                        }
+                    });
+                });
+            }
+        });
+    });
+    sendSurvey(correspondingSurvey);
+    return res.status(200).send({ message: 'Results uploaded successfully.' });
+});
+
+export function sendSurvey(survey: ISurvey) {
+    io.emit('survey', survey);
 }
 
 // socket.io
 io.on('connection', (socket: any) => {
-  console.log('user ' + socket.id.substr(0, 2) + ' connected');
+    console.log('user ' + socket.id.substr(0, 2) + ' connected');
 
-  socket.on('disconnect', () => {
-    console.log('user ' + socket.id.substr(0, 2) + ' disconnected!');
-  });
+    socket.on('disconnect', () => {
+        console.log('user ' + socket.id.substr(0, 2) + ' disconnected!');
+    });
 });
-

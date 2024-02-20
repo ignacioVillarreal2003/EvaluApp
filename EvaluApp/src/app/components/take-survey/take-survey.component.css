@@ -1,0 +1,95 @@
+.take-survey {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 1000px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: rgba(240, 248, 255, 0.562);
+}
+
+.take-survey h1 {
+    font-size: 40px;
+}
+
+.take-survey h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.take-survey .questions {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+    list-style: none;
+}
+
+.take-survey .question {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.take-survey .question h3 {
+    font-size: 25px;
+}
+
+.take-survey .question .options {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+    list-style: none;
+}
+
+.take-survey .question .options .option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    transition: all 0.35s ease-out;
+}
+
+.take-survey .question .options .option:hover {
+    background-color: aliceblue;
+}
+
+.take-survey .question .options .option input {
+    margin-right: 20px;
+}
+
+.take-survey .question .options .option p {
+    font-size: 18px;
+}
+
+.take-survey .btn-finish {
+    background-color: rgba(255, 68, 0, 0.582);
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: all 0.35s ease-out;
+    cursor: pointer;
+}
+
+.take-survey .btn-finish:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 1100px) {
+    .take-survey {
+        width: 600px;
+    }
+}
+
+@media (max-width: 610px) {
+    .take-survey {
+        width: 400px;
+    }
+}

@@ -1,0 +1,32 @@
+<div class="create-survey">
+  <input class="title" type="text" placeholder="Untitled Form" [(ngModel)]="surveyTitle">
+
+  <div class="content">
+
+    <form [formGroup]="form" class="createQuestion">
+      <div class="question">
+        <input class="questionTitle" type="text" placeholder="Untitled Question" formControlName="questionTitle">
+        <ul class="options">
+          <li class="option" *ngFor="let option of getQuestionOptions; let i = index" [formGroup]="option">
+            <input class="optionText" type="text" placeholder="No option" formControlName="text">
+          </li>
+        </ul>
+        <button (click)="addOption()" class="btn-add-option">Add Option</button>
+      </div>
+      <button (click)="addQuestion()" class="btn-add-question">Add Question</button>
+    </form>
+
+    <ul class="viewQuestions">
+        <li class="viewQuestion" *ngFor="let question of questionList">
+          <h2>{{question.title}}</h2>
+          <ul class="viewOptions">
+            <li class="viewOption" *ngFor="let option of question.options">
+              <p>{{option.title}}</p>
+            </li>
+          </ul>
+        </li>
+    </ul>
+  </div>
+
+  <button (click)="publishSurvey()" class="btn-publish">Publish Survey</button>
+</div>
