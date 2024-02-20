@@ -7,7 +7,7 @@ Este proyecto en Angular se enfoca en el desarrollo de una aplicación de encues
 1. Clona el repositorio:
 
     ```
-    git clone https://github.com/ignacioVillarreal2003/DCPage.git
+    git clone https://github.com/ignacioVillarreal2003/EvaluApp.git
     ```
 
 2. Navega al directorio del proyecto:
